@@ -5,38 +5,47 @@ import SVGKit
 
 #if os(macOS)
 @available(macOS 10.15, *)
-struct SVGKFastImageViewSUI: NSViewRepresentable
+public struct SVGKFastImageViewSUI: NSViewRepresentable
 {
-    @Binding var url:URL
-    @Binding var size:CGSize
+    @Binding var url: URL
+    @Binding var size: CGSize
     
-    func makeNSView(context: Context) -> SVGKFastImageView {
+    public init(url: Binding<URL>, size: Binding<CGSize>) {
+        self._url = url
+        self._size = size
+    }
+    
+    public func makeNSView(context: Context) -> SVGKFastImageView {
         let svgImage = SVGKImage(contentsOf: url)
         svgImage?.size = size
         return SVGKFastImageView(svgkImage: svgImage ?? SVGKImage())
     }
     
-    func updateNSView(_ nsView: SVGKFastImageView, context: Context) {
+    public func updateNSView(_ nsView: SVGKFastImageView, context: Context) {
         nsView.image = SVGKImage(contentsOf: url)
         nsView.image.size = size
     }
     
-    typealias NSViewType = SVGKFastImageView
-    
 }
 #else
 @available(iOS 13.0, *)
-struct SVGKFastImageViewSUI:UIViewRepresentable
+public struct SVGKFastImageViewSUI:UIViewRepresentable
 {
-    @Binding var url:URL
-    @Binding var size:CGSize
-    func makeUIView(context: Context) -> SVGKFastImageView {
+    @Binding var url: URL
+    @Binding var size: CGSize
+    
+    public init(url: Binding<URL>, size: Binding<CGSize>) {
+        self._url = url
+        self._size = size
+    }
+    
+    public func makeUIView(context: Context) -> SVGKFastImageView {
         let svgImage = SVGKImage(contentsOf: url)
         svgImage?.size = size
         return SVGKFastImageView(svgkImage: svgImage ?? SVGKImage())
         
     }
-    func updateUIView(_ uiView: SVGKFastImageView, context: Context) {
+    public func updateUIView(_ uiView: SVGKFastImageView, context: Context) {
         uiView.image = SVGKImage(contentsOf: url)
         uiView.image.size = size
     }
