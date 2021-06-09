@@ -7,12 +7,12 @@ import SVGKit
 @available(macOS 10.15, *)
 public struct SVGKFastImageViewSUI: NSViewRepresentable
 {
-    @Binding var url: URL
-    @Binding var size: CGSize
+    let url: URL?
+    let size: CGSize
     
-    public init(url: Binding<URL>, size: Binding<CGSize>) {
-        self._url = url
-        self._size = size
+    public init(url: URL?, size: CGSize) {
+        self.url = url
+        self.size = size
     }
     
     public func makeNSView(context: Context) -> SVGKFastImageView {
